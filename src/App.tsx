@@ -1,14 +1,14 @@
 import './App.css';
+import Card from "./components/Card/Card.tsx";
 
 const App = () => (
     <>
         <div className="playingCards faceImages">
-            <div className="cards">
-                <span className="card rank-k diams">
-                    <span className="rank">K</span>
-                    <span className="suit">♦</span>
-                </span>
-            </div>
+            <Card rank="k" suit="diams"/>
+            <Card rank="2" suit="hearts"/>
+            <Card rank="3" suit="spades"/>
+            <Card rank="4" suit="clubs"/>
+            <Card rank="a" suit="hearts"/>
         </div>
     </>
 );
