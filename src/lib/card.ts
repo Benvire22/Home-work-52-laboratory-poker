@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
     public rank: string = '';
     public suit: string = '';
 
@@ -10,5 +10,3 @@ class Card {
         this.suit = suit;
     }
 }
-
-export default Card;

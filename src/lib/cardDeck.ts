@@ -1,15 +1,10 @@
 import Card from "./card.ts";
 
-interface ICard {
-    rank: string;
-    suit: string;
-}
-
 const rank = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
 const suit = ['diams', 'hearts', 'clubs', 'spades'];
 
-class CardDeck {
-    cards:ICard[] = []
+export default class CardDeck {
+    cards:Card[] = []
 
     constructor() {
         this.cards = []
@@ -22,14 +17,14 @@ class CardDeck {
         }
     }
 
-    getCard(): ICard {
+    getCard(): Card {
         const randomNumber = Math.floor(Math.random() * this.cards.length);
-        const randomCard = this.cards.splice(randomNumber);
+        const randomCard = this.cards.splice(randomNumber, 1);
         return randomCard[0];
     }
 
-    getCards(howMany: number): ICard[] {
-        const randomCards: ICard[] = [];
+    getCards(howMany: number): Card[] {
+        const randomCards: Card[] = [];
 
         for (let i = 0; i < howMany; i++) {
             const randomCard = this.getCard();
@@ -39,5 +34,3 @@ class CardDeck {
         return randomCards;
     }
 }
-
-export default CardDeck;
