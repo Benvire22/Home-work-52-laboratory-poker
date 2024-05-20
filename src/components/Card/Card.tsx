@@ -6,10 +6,25 @@ interface Props {
 }
 
 const Card:React.FC<Props> = ({rank, suit}) => {
+    const getSuitSymbol = (suit: string): string => {
+        switch (suit) {
+            case 'diams':
+                return '♦';
+            case 'hearts':
+                return '♥';
+            case 'clubs':
+                return '♣';
+            case 'spades':
+                return '♠';
+            default:
+                throw new Error('Undefined suit');
+        }
+    };
+
     return (
         <span className={`card rank-${rank} ${suit}`}>
-                <span className="rank">{rank}</span>
-                <span className="suit">{suit}</span>
+                <span className="rank">{rank.toUpperCase()}</span>
+                <span className="suit">{getSuitSymbol(suit)}</span>
         </span>
     );
 };
