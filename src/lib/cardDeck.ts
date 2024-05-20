@@ -5,7 +5,7 @@ interface ICard {
     suit: string;
 }
 
-const rank = ['2, 3, 4, 5, 6, 7, 8, 9, 10, j, q, k, a'];
+const rank = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
 const suit = ['diams', 'hearts', 'clubs', 'spades'];
 
 class CardDeck {
