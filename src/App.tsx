@@ -4,18 +4,24 @@ import ICard from "./lib/card.ts";
 import { useState } from "react";
 import Card from "./components/Card/Card.tsx";
 import cardDeck from "./lib/cardDeck.ts";
+import PokerHand from "./lib/pokerHand.ts";
 
 
 const App = () => {
     const [hand, setHand] = useState<ICard[]>([]);
     const [deck, setDeck] = useState<CardDeck>();
+    const [combination, setCombination] = useState<string>('');
 
     const dealCards = () => {
         const newDeck = new cardDeck();
         const newHand = newDeck.getCards(5);
 
+        const outcome = new PokerHand(newHand);
+
         setHand(newHand);
         setDeck(newDeck);
+
+        setCombination(outcome.getOutcome());
     };
 
     const getFiveCard = () => {
@@ -23,17 +29,20 @@ const App = () => {
             const copyDeck = deck;
             const newHand = copyDeck.getCards(5);
 
+            const outcome = new PokerHand(newHand);
+
             setHand(newHand);
             setDeck(copyDeck);
+            setCombination(outcome.getOutcome());
         }
     };
 
     return (
         <div className="app">
         {
-            deck ? <h2>{deck.cards.length}</h2> : ''
+            deck ? <h2>Карт в колоде: {deck.cards.length}</h2> : ''
         }
-        <button onClick={dealCards}>Раздать карты</button>
+        <button onClick={dealCards}>Раздать новую калоду</button>
             {deck?.cards.length !== 0
                 ?
                 <div className="playingCards faceImages">
@@ -42,7 +51,7 @@ const App = () => {
                         if (card) {
                             return (
                                 <Card rank={card.rank} suit={card.suit} key={card.rank + card.suit}/>
-                            )
+                            );
                         }
                     })}
 
@@ -51,6 +60,7 @@ const App = () => {
                             <button onClick={getFiveCard}>Получить пять карт</button>
                         </div> : ''
                     }
+                    <h2>Результат раунда: {combination}</h2>
                 </div>
                 :
                 <p>Пусто</p>
