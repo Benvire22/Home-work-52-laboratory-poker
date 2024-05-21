@@ -42,7 +42,7 @@ const App = () => {
         {
             deck ? <h2>Карт в колоде: {deck.cards.length}</h2> : ''
         }
-        <button onClick={dealCards}>Раздать новую калоду</button>
+        <button onClick={dealCards}>Раздать новую колоду</button>
             {deck?.cards.length !== 0
                 ?
                 <div className="playingCards faceImages">

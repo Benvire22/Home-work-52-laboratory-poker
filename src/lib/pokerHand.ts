@@ -11,14 +11,16 @@ export default class PokerHand {
         let outcome: string = 'Старшая карта';
         let flashCombination = 0;
         let onePairCombination = 0;
+        let twoPairCombination = 0;
+        let threeOfAKindCombination = 0;
 
         const ranks: string[] = [];
         const suits: string[] = [];
 
         this.cards.forEach((card) => {
             if (card) {
-                ranks.push(card.rank)
-                suits.push(card.suit)
+                ranks.push(card.rank);
+                suits.push(card.suit);
             }
         });
 
@@ -26,12 +28,22 @@ export default class PokerHand {
             const currentRank = ranks[i];
 
             for (let j = 0; j < ranks.length; j++) {
-
                 if (ranks[j] === currentRank) {
                     onePairCombination++;
+                    threeOfAKindCombination++;
 
-                    if (onePairCombination === 7) {
+                    if (threeOfAKindCombination >= 11) {
+                        outcome = 'Тройка';
+                        break;
+                    }
+
+                    if (onePairCombination >= 7) {
                         outcome = 'Одна пара';
+                        twoPairCombination++;
+                    }
+
+                    if (twoPairCombination === 2) {
+                        outcome = 'Две пары';
                         break;
                     }
                 }
@@ -44,7 +56,6 @@ export default class PokerHand {
 
                 if (flashCombination === 5) {
                     outcome = 'Флеш';
-                    console.log(flashCombination);
                     break;
                 }
             }
