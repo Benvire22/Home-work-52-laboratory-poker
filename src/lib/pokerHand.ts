@@ -1,66 +1,79 @@
-import Card from "./card.ts";
+import Card from './card.ts';
 
 export default class PokerHand {
-    cards: Card[] = [];
+  cards: Card[] = [];
 
-    constructor(cards: Card[]) {
-        this.cards = cards;
+  constructor(cards: Card[]) {
+    this.cards = cards;
+  }
+
+  getOutcome(): string {
+    let outcome: string = 'Старшая карта';
+
+    let flashCombination: number = 0;
+    let onePairCombination: number = 0;
+    let twoPairCombination: number = 0;
+    let threeOfKindCombination: number = 0;
+
+    const ranks: string[] = [];
+    const suits: string[] = [];
+
+    this.cards.forEach((card) => {
+      if (card) {
+        ranks.push(card.rank);
+        suits.push(card.suit);
+      }
+    });
+
+    for (let i = 0; i < ranks.length; i++) {
+      const currentRank: string = ranks[i];
+
+      if (suits[i] === suits[4]) {
+        flashCombination++;
+
+        if (flashCombination === 5) {
+          outcome = 'Флеш';
+          break;
+        }
+      }
+
+      for (let j = 0; j < ranks.length; j++) {
+        if (ranks[j] === currentRank) {
+          onePairCombination++;
+          threeOfKindCombination++;
+
+          // console.log('1:', onePairCombination);
+          // console.log('2:', twoPairCombination);
+          // console.log('3:', threeOfKindCombination);
+
+          if (onePairCombination >= 7) {
+            outcome = 'Одна пара';
+
+            if (twoPairCombination < 2) {
+              twoPairCombination++;
+            }
+
+            threeOfKindCombination++;
+          }
+
+          if (twoPairCombination === 2 && onePairCombination === 9) {
+            outcome = 'Две пары';
+            break;
+          }
+
+          if (threeOfKindCombination >= 11) {
+            outcome = 'Тройка';
+            break;
+          }
+
+        }
+      }
     }
 
-    getOutcome(): string {
-        let outcome: string = 'Старшая карта';
-        let flashCombination = 0;
-        let onePairCombination = 0;
-        let twoPairCombination = 0;
-        let threeOfAKindCombination = 0;
-
-        const ranks: string[] = [];
-        const suits: string[] = [];
-
-        this.cards.forEach((card) => {
-            if (card) {
-                ranks.push(card.rank);
-                suits.push(card.suit);
-            }
-        });
-
-        for (let i = 0; i < ranks.length; i++) {
-            const currentRank = ranks[i];
-
-            for (let j = 0; j < ranks.length; j++) {
-                if (ranks[j] === currentRank) {
-                    onePairCombination++;
-                    threeOfAKindCombination++;
-
-                    if (threeOfAKindCombination >= 11) {
-                        outcome = 'Тройка';
-                        break;
-                    }
-
-                    if (onePairCombination >= 7) {
-                        outcome = 'Одна пара';
-                        twoPairCombination++;
-                    }
-
-                    if (twoPairCombination === 2) {
-                        outcome = 'Две пары';
-                        break;
-                    }
-                }
-            }
-        }
-
-        for (let i = 0; i < suits.length; i++) {
-            if (suits[i] === suits[4]) {
-                flashCombination++;
-
-                if (flashCombination === 5) {
-                    outcome = 'Флеш';
-                    break;
-                }
-            }
-        }
-
-        return outcome;
+    if (ranks.length === 2 && ranks[0] === ranks[1]) {
+      outcome = 'Одна пара';
     }
+
+    return outcome;
+  }
 }
