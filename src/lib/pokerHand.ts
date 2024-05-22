@@ -10,7 +10,7 @@ export default class PokerHand {
   getOutcome(): string {
     let outcome: string = 'Старшая карта';
 
-    let flashCombination: number = 0;
+    let flushCombination: number = 0;
     let onePairCombination: number = 0;
     let twoPairCombination: number = 0;
     let threeOfKindCombination: number = 0;
@@ -29,10 +29,10 @@ export default class PokerHand {
       const currentRank: string = ranks[i];
 
       if (suits[i] === suits[4]) {
-        flashCombination++;
+        flushCombination++;
 
-        if (flashCombination === 5) {
-          outcome = 'Флеш';
+        if (flushCombination === 5) {
+          outcome = 'Флэш';
           break;
         }
       }
@@ -41,10 +41,6 @@ export default class PokerHand {
         if (ranks[j] === currentRank) {
           onePairCombination++;
           threeOfKindCombination++;
-
-          // console.log('1:', onePairCombination);
-          // console.log('2:', twoPairCombination);
-          // console.log('3:', threeOfKindCombination);
 
           if (onePairCombination >= 7) {
             outcome = 'Одна пара';
